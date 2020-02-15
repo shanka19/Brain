@@ -131,7 +131,7 @@ int main(int argc, char *argv[])
   text->SetTextFont(42);
   if (decodeDebug(debug, 0)==1)
   {
-    c_World=new TCanvas("c_World", "Natural Neural Network in Genetic Algorithm", 700, 700);
+    c_World=new TCanvas("c_World", "Natural Neural Network in Genetic Algorithm", 500, 500);
     // Safety Circle
     // TEllipse *e_safe=new TEllipse(worldSize/2., worldSize/2., 70, 70);
     // e_safe->Draw();
