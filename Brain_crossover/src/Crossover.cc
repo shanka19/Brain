@@ -55,10 +55,12 @@ void Crossover::crossover_type1(Vec2d *A,Vec2d *B,Vec2d *child1,Vec2d *child2)
         vec1.clear();
     }
     double prob = r3->Uniform();
+    // The term prob was included to check the effectiveness of a mixed strategy (crossover via column or row)
     for(int i=0;i<n;i++)
     {
         for(int j=0;j<n;j++)
         {
+            //To implement the strategy desribed in the paper prob <= 1
             if(prob<=0.5)
 	    {
               if(j<n/2)
