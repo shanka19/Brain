@@ -34,10 +34,9 @@ Bot::Bot(std::string type, double x, double y, double theta, double visualAngle,
   visualAngle_=visualAngle;
   avgTimeToFood_ = 0.0;
   nEatenFoods_ = 0;
-  timeToEat_ = birthTime;
   birthTime_ = birthTime;
   penaltyTerm_ = 0;
-  timeLastEaten_ = 0;
+  timeLastEaten_ = birthTime_;
   avgTimeToFoodTemp_ = 0;
   eatenInGeneration_ = 0;
   brain_=new Brain(brainSize, debug_, name_);
@@ -78,11 +77,10 @@ Bot::Bot(Bot *parentBot, double mu_newNeuron, double mu_newConnection, double mu
   avgTimeToFood_ = 0;
   birthTime_ = birthTime;
   penaltyTerm_ = 0;
-  timeLastEaten_ = 0;
   avgTimeToFoodTemp_ = 0;
   eatenInGeneration_ = 0;
   nEatenFoods_ = 0;
-  timeToEat_ = birthTime;
+  timeLastEaten_ = birthTime_;
   eatenInGeneration_ = 0;
   // std::cout<<"old visual angle = "<<visualAngle_<<std::endl;
   visualAngle_=parentBot->visualAngle_+mu_visualAngle*(-0.5+r3->Uniform());
@@ -131,10 +129,9 @@ Bot::Bot(Bot *parentBot, Vec2d *dist_matrix, int birthTime): Entity(parentBot->w
   theta_=parentBot->theta_;
   avgTimeToFood_ = 0;
   nEatenFoods_ = 0;
-  timeToEat_ = birthTime;
   birthTime_ = birthTime;
   penaltyTerm_ = 0;
-  timeLastEaten_ = 0;
+  timeLastEaten_ = birthTime_;
   avgTimeToFoodTemp_ = 0;
   eatenInGeneration_ = 0;
   // std::cout<<"old visual angle = "<<visualAngle_<<std::endl;
@@ -349,30 +346,29 @@ void Bot::stepInTime()
 
 void Bot::incrementTimeToFood(int time)
 {
-  int dt = time - timeToEat_;
-  timeLastEaten_ = time;
+  int dt = time - timeLastEaten_;
   ++nEatenFoods_;
   avgTimeToFood_ = ((nEatenFoods_-1)*avgTimeToFood_ + dt)/nEatenFoods_;
-  timeToEat_ = time;
+  timeLastEaten_ = time;
 }
 
-void Bot::updateAvgTimeToEat(int penaltyTerm,int flag,int nEaten)
+void Bot::updateAvgTimeToEat()
 {
-  if(flag == 0)
+  if(eatenInGeneration_ == 0)
   {
-    avgTimeToFoodTemp_ = (avgTimeToFoodTemp_ + penaltyTerm)/(nEaten + 1);
+    avgTimeToFoodTemp_ = (avgTimeToFoodTemp_ + penaltyTerm_)/(nEatenFoods_ + 1);
   }
-  if(flag == 1)
+  if(eatenInGeneration_ == 1)
   {
     avgTimeToFoodTemp_ = avgTimeToFood_;
   }
 }
 
-void Bot::updatePenaltyTerm(int time,int birthTime,int timeLastEaten,int flag)
+void Bot::updatePenaltyTerm(int time)
 {
-  if(flag==0)
+  if(eatenInGeneration_==0)
   {
-    penaltyTerm_ = time - std::max(birthTime,timeLastEaten);
+    penaltyTerm_ = time - timeLastEaten_;
   }
 }
 
