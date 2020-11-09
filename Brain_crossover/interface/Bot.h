@@ -36,7 +36,6 @@ class Bot: public Entity
     float avgTimeToFood_;
     float avgTimeToFoodTemp_;
     int nEatenFoods_;
-    int timeToEat_;
     int birthTime_;
     int penaltyTerm_;
     int eatenInGeneration_;
@@ -61,8 +60,8 @@ class Bot: public Entity
     
     void stepInTime();
     void incrementTimeToFood(int time);
-    void updateAvgTimeToEat(int penaltyTerm,int flag,int nEaten);
-    void updatePenaltyTerm(int time,int birthTime,int timeLastEaten,int flag);
+    void updateAvgTimeToEat();
+    void updatePenaltyTerm(int time);
     void mutate(double mu_modConnection, double mu_visualAngle,int generations);
     
     void printBrain();
