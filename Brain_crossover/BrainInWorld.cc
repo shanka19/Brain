@@ -401,7 +401,8 @@ int main(int argc, char *argv[])
 	
       }
      
-      /*cout << " " << endl;
+      /*std::cout<<"Generation "<<generations<<std::endl;
+      cout << " " << endl;
       for(unsigned int i=0;i<bots.size();i++)
       {
         cout << "avgTimeToFoods : " << i << "Bot Name " << bots.at(i)->name_ << " " << bots.at(i)->avgTimeToFood_ << endl;
@@ -420,8 +421,8 @@ int main(int argc, char *argv[])
 
       for(unsigned int i=0;i<numberOfBots;i++)
       {
-        bots.at(i)->updatePenaltyTerm(time,bots.at(i)->birthTime_,bots.at(i)->timeLastEaten_,bots.at(i)->eatenInGeneration_);
-	bots.at(i)->updateAvgTimeToEat(bots.at(i)->penaltyTerm_,bots.at(i)->eatenInGeneration_,bots.at(i)->nEatenFoods_);
+	bots.at(i)->updatePenaltyTerm(time);
+	bots.at(i)->updateAvgTimeToEat();
 	avgTimeToFoods[i] = bots.at(i)->avgTimeToFood_;
 	avgTimeToFoodsTemp[i] = bots.at(i)->avgTimeToFoodTemp_;
 	bots.at(i)->eatenInGeneration_ = 0;
